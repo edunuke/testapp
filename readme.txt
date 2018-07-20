@@ -20,7 +20,10 @@ run btc validator:
 
 #-------------
 
+Member Page (login_required: member@example.com / Password1)
+Admin Page (roles_required: admin@example.com / Password1)
 
+#-----------
 {
     "status": 1,
     "message": "Address key creted",

@@ -54,9 +54,30 @@ with open('C:\\Users\\eduperez\\Desktop\\walletapi\\btcapi\\app\\pubmessage.txt'
     a = file.readlines()[0]
 #%%
 
-from bottle import route
+#%%
+import psycopg2
+
+conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='mysecretpassword'")
+print(conn)
+conn.cursor()
+cur.execute("CREATE TABLE test (id serial PRIMARY KEY, num integer, data varchar);")
+
+#%%
+
+from sqlalchemy import create_engine
+
+db_string = "postgresql://postgres:test@localhost/postgres"
+
+db = create_engine(db_string)
+
+# Create 
+db.execute("CREATE TABLE IF NOT EXISTS films (title text, director text, year text)")  
+db.execute("INSERT INTO films (title, director, year) VALUES ('Doctor Strange', 'Scott Derrickson', '2016')")
 
 
+result_set = db.execute("SELECT * FROM films")  
+for r in result_set:  
+    print(r)
 
 
 
