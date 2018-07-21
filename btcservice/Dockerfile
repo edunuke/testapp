@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM debian:stretch-slim
 LABEL maintainer="eduardo.denadai@gmail.com"
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 ENV PATH /opt/conda/bin:$PATH
