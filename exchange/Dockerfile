@@ -1,4 +1,4 @@
-FROM python:3.7
+FROM python:3.7-slim
 
 RUN apt-get update --fix-missing && \
     apt-get install -y autoconf g++ wget bzip2 ca-certificates curl git nano iputils-ping nano procps supervisor nginx && \
