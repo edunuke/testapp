@@ -230,11 +230,15 @@ var mainChart = new Chart($('#main-chart'), {
       }]
     },
     elements: {
+      line: {
+        tension: 0.00001,
+        borderWidth: 1
+      },
       point: {
         radius: 0,
         hitRadius: 10,
         hoverRadius: 4,
-        hoverBorderWidth: 3
+        hoverBorderWidth: 3,
       }
     }
   }
