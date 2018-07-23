@@ -1,38 +1,37 @@
-# Copyright 2014 SolidBuilds.com. All rights reserved
-#
-# Authors: Ling Thio <ling.thio@gmail.com>
-
-
 from flask import Blueprint, redirect, render_template
 from flask import request, url_for
 from flask_user import current_user, login_required, roles_required
 
 from app import db
-from app.models.user_models import UserProfileForm
+from app.models.user import UserProfileForm
 
-main_blueprint = Blueprint('main', __name__, template_folder='templates',static_folder='static')
+main = Blueprint('main', 
+                           __name__,
+                           template_folder='templates',
+                           static_folder='static',
+                           static_url_path = '/main/static')
 
 # The Home page is accessible to anyone
-@main_blueprint.route('/')
+@main.route('/')
 def home_page():
-    return render_template('main/index.html')
+    return render_template('index.html')
 
 
 # The User page is accessible to authenticated users (users that have logged in)
-@main_blueprint.route('/member')
+@main.route('/member')
 @login_required  # Limits access to authenticated users
 def member_page():
-    return render_template('main/user_page.html')
+    return render_template('mn/user_page.html')
 
 
 # The Admin page is accessible to users with the 'admin' role
-@main_blueprint.route('/admin')
+@main.route('/admin')
 @roles_required('admin')  # Limits access to users with the 'admin' role
 def admin_page():
-    return render_template('main/admin_page.html')
+    return render_template('admin_page.html')
 
 
-@main_blueprint.route('/main/profile', methods=['GET', 'POST'])
+@main.route('/profile', methods=['GET', 'POST'])
 @login_required
 def user_profile_page():
     # Initialize form
