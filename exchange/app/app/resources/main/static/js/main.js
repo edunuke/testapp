@@ -1,15 +1,3 @@
-/* eslint-disable object-shorthand */
-
-/* global Chart, CustomTooltips, getStyle, hexToRgba */
-
-/**
- * --------------------------------------------------------------------------
- * CoreUI Free Boostrap Admin Template (v2.0.0): main.js
- * Licensed under MIT (https://coreui.io/license)
- * --------------------------------------------------------------------------
- */
-
-/* eslint-disable no-magic-numbers */
 // Disable the on-canvas tooltip
 Chart.defaults.global.pointHitDetectionRadius = 1;
 Chart.defaults.global.tooltips.enabled = false;
@@ -230,6 +218,9 @@ var mainChart = new Chart($('#main-chart'), {
       }]
     },
     elements: {
+      line: {
+        tension: 0.00001,
+      },
       point: {
         radius: 0,
         hitRadius: 10,
