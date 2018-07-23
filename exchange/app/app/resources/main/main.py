@@ -21,7 +21,7 @@ def home_page():
 @main.route('/member')
 @login_required  # Limits access to authenticated users
 def member_page():
-    return render_template('mn/user_page.html')
+    return render_template('user_page.html')
 
 
 # The Admin page is accessible to users with the 'admin' role
