@@ -5,23 +5,22 @@ from flask_user import current_user, login_required, roles_required
 from app import db
 from app.models.user import UserProfileForm
 
-main = Blueprint('main', 
-                           __name__,
-                           template_folder='templates',
-                           static_folder='static',
-                           static_url_path = '/main/static')
+main = Blueprint('main', __name__,
+                        template_folder='templates',
+                        static_folder='static',
+                        static_url_path = '/main/static')
 
 # The Home page is accessible to anyone
 @main.route('/')
 def home_page():
-    return render_template('index.html')
+    return render_template('home.html')
 
 
 # The User page is accessible to authenticated users (users that have logged in)
 @main.route('/member')
 @login_required  # Limits access to authenticated users
 def member_page():
-    return render_template('user_page.html')
+    return render_template('main.html')
 
 
 # The Admin page is accessible to users with the 'admin' role
@@ -51,5 +50,4 @@ def user_profile_page():
     # Process GET or invalid POST
     return render_template('main/user_profile_page.html',
                            form=form)
-
-
+                           
