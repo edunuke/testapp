@@ -43,40 +43,34 @@ var landingPageController = {
                 //contentType: "application/json",
                 beforeSend: function () {
                     $('.login-form span').remove()
-                    $('#loader-wrapper').fadeIn(500)
+
 
                 },
                 success: function(response) {
                     timer = 2000;
                     if (response.status == 'error') {
-                        console.log('error')
-                        console.log(response.message)
-                        $('.login-form span').remove()
-                        $('.login-form').append('<span>'+response.message+'</span>')
-                        setTimeout(function () {
-                            $('#loader-wrapper').fadeOut(500);
-                        },timer);
+                        $(".login-form>input.oops").removeClass("oops");
+                        Object.keys(response.message).map(e => $(".login-form #" + e).addClass("oops"));
+
 
 
                     } else if (response.status == 'validation') {
-                        console.log('validation')
-                        $('.login-form').remove('span');
+                        $("input.oops").removeClass("oops");
+                        Object.keys(response.message).map(e => $(".login-form #" + e).addClass("oops"));
 
-                        setTimeout(function () {
-                            $('#loader-wrapper').fadeOut(500);
-                        }, timer + 2000);
                         
-                        
-
-                        Object.keys(response.message).map(e => console.log(`key=${e}  value=${response.message[e]}`));
+    
+                       // Object.keys(response.message).map(e => $('.login-form').append('<span>'+`key=${e}  value=${response.message[e]}`+'</span>'));
                         
                     } else {
                         $('.login-form').remove('span')
-                        console.log('im good')
-                        setTimeout(function () {
-                            //console.log(response.message)
+                        $('canvas').hide()
+                        $('.login-page').hide()
+                        $('#loader-wrapper').fadeIn('slow', function () {
                             window.location = response.message;
-                        },timer);
+                        })
+
+
                         
                         
                     } 

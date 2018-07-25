@@ -78,17 +78,17 @@ Shape.prototype.draw = function() {
   ctx.lineTo(this.end.x_2, this.end.y_2);
   ctx.moveTo(this.start.x, this.start.y);
   ctx.lineTo(this.end.x_3, this.end.y_3);
-  //ctx.closePath();
+  ctx.closePath();
   ctx.strokeStyle =
     "rgba(" + c1 + "," + c2 + "," + c3 + "," + 1 / this.generation / 5 + ")";
   ctx.stroke();
-  //ctx.fill();
+  ctx.fill();
 };
 
 function animate() {
   //ctx.clearRect(0, 0, canvasWidth, canvasHeight);
   ctx.globalCompositeOperation = "source-over";
-  ctx.fillStyle = "rgba(57,57,57,.2)";
+  ctx.fillStyle = "rgba(149, 207, 226,.5)";
   ctx.fillRect(0, 0, canvasWidth, canvasHeight);
   ctx.globalCompositeOperation = "lighter";
   shapes = [];
@@ -149,6 +149,6 @@ window.addEventListener("resize", function() {
 
   canvas.setAttribute("width", canvasWidth);
   canvas.setAttribute("height", canvasHeight);
-  ctx.strokeStyle = "rgba(66,134,240,.3)";
+  ctx.strokeStyle = "rgba(0,0,0,.3)";
   ctx.globalCompositeOperation = "lighter";
 });

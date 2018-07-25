@@ -5,30 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href={{url_for('main.static', filename='img/faviconLarge.ico')}} type="image/x-icon">
+    <link rel="shortcut icon" href={{url_for('main.static', filename='img/favicon.ico')}} type="image/x-icon">
 
-    <title>Dataquantix</title>
+    <title>Istmex</title>
 
     <!-- CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-	<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
-	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="{{url_for('home.static', filename='node_modules/fontawesome/css/all.min.css')}}">
+	  <link rel="stylesheet" href="{{url_for('home.static', filename='node_modules/bootstrap/dist/css/bootstrap.min.css')}}">
+	  <link rel="stylesheet" href="{{url_for('home.static', filename='node_modules/animate-css/animate.min.css')}}">
     <!-- Custom styles for this template -->
-	<link href={{url_for('home.static', filename='css/home.css')}} rel="stylesheet">
-	<link href={{url_for('home.static', filename='css/loader.css')}} rel="stylesheet">
+	  <link href={{url_for('home.static', filename='css/home.css')}} rel="stylesheet">
+	  <link href={{url_for('home.static', filename='css/loader.css')}} rel="stylesheet">
   </head>	
 
   <body class="animated fadeIn">
       <canvas id="canvas"></canvas>
       <div id="log_reg">
-          <div id="loader-wrapper">
-              <div class="container" style="">
-                <div class='ring blue'></div>
-                <div id="content">
-                  <span>Cargando</span>
-                </div>
-              </div>      
-            </div>
           <div class="login-page">
             <div class="form">
               <form class="register-form">
@@ -51,13 +43,15 @@
                 </div>   
 
                 </fieldset>
-                <p class="message">Already registered? <a href="#">Sign In</a></p>
+                <p class="message">Already registered? <a>Sign In</a></p>
               </form>
   
   
               <form class="login-form">
                 <div class="title">
-                  <p> Simple text</p>
+                    
+                  <p>Istmex Exchange</p>
+                  
                 </div>
                 <fieldset class="forms_fieldset">
                   {{loginForm.csrf_token()}}
@@ -79,11 +73,21 @@
                   </div>
 
               </fieldset>
-                <p class="message">Not registered? <a href="#">Create an account</a></p>
+                <p class="message">Not registered? <a>Create an account</a></p>
               </form>
-  
+
   
             </div>
+
+          </div>
+          <div id="loader-wrapper">
+            <div id="splash">
+              <div class="anim">
+                <div id="loader">
+                    <i class="fas fa-chart-line fa-3x"></i>
+                </div>
+              </div>
+            </div>    
           </div>
         </div>
 
