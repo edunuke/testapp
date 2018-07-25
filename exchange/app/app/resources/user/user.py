@@ -9,7 +9,7 @@ from app.resources.home.Forms import LoginForm, RegistrationForm
 from flask import jsonify
 
 
-class User(MethodView):
+class UserView(MethodView):
 	def get(self):
 		pass
     

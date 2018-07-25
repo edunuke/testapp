@@ -1,12 +1,10 @@
-from .User import User
+from .User import UserView
 from flask import Blueprint
 
-user = Blueprint('user',__name__,)
 
-user_api = User.as_view('user_api')
-
-user.add_url_rule('/users/', view_func = user_api, methods=["GET","POST"])
-#user.add_url_rule('/users/reset_password/<string:username>	', view_func = user_api_view, methods=["RESET",])
+user = Blueprint('user',__name__, template_folder='templates')
+user.add_url_rule('/user/', view_func=UserView.as_view('user'), methods=['GET','POST',])
+    
 
 class Resource:
     def get_blueprint(self):

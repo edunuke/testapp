@@ -106,3 +106,12 @@ canvas {
   position: fixed;
   opacity: 0.9;
 }
+
+a {
+  cursor: pointer;
+}
+.oops {
+  border-width:medium !important;
+  border-style: solid !important;
+  border-color: red !important;
+}

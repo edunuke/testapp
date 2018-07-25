@@ -37,10 +37,8 @@ var landingPageController = {
 
             $.ajax({
                 url: "/main/",
-                //data: JSON.stringify(data),
                 data: data,
                 type: 'POST',
-                //contentType: "application/json",
                 beforeSend: function () {
                     $('.login-form span').remove()
 
