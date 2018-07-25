@@ -2,23 +2,29 @@
 # Usage: pip install -r requirements.txt
 
 # Flask Framework
-Flask==0.12
+Flask
 
 # Flask Packages
-Flask-Login==0.4.0
-Flask-Migrate==2.0.2
-Flask-Script==2.0.5
-Flask-SQLAlchemy==2.1
-Flask-WTF==0.14.2
-Flask-Mail
-Flask-User
 
-# Automated tests
-pytest==3.0.5
-pytest-cov==2.4.0
-# Development tools
-Fabric3==1.13.1.post1
-tox==2.7.0
+
+flasgger
+Flask-Babel
+Flask-DebugToolbar
+Flask-Login
+Flask-Mail
+Flask-Script
+Flask-sqlalchemy
+Flask-WTF
+flask-socketio
+
+
+#other libs
+passlib==1.7.1
+sqlalchemy-migrate==0.11.0
+
+# exchanges
+gdax
+
 
 # server
 gunicorn

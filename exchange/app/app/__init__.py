@@ -1,109 +1,67 @@
-from datetime import datetime
-import os
-from flask import Flask
-from flask_script import Manager
+from flask import Flask, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from flask_mail import Mail
-from flask_migrate import Migrate, MigrateCommand
-from flask_user import UserManager
+from flask_login import LoginManager
+from flask_debugtoolbar import DebugToolbarExtension
+from app.packages.auth import authorized
 from flask_wtf.csrf import CSRFProtect
+from flask_socketio import SocketIO
+import threading
+#from flasgger import Swagger
 
 
-# Instantiate Flask extensions
-csrf_protect = CSRFProtect()
-db = SQLAlchemy()
-mail = Mail()
-migrate = Migrate()
+
+app = Flask(__name__)
+app.config.from_object('config')
 
 
-# Initialize Flask Application
-def create_app(extra_config_settings={}):
-    """Create a Flask application.
-    """
-    # Instantiate Flask
-    app = Flask(__name__)
+db = SQLAlchemy(app)
+lm = LoginManager(app)
+csrf = CSRFProtect(app)
+socketio = SocketIO(app)
 
-    # Load common settings
-    app.config.from_object('app.settings')
-    # Load environment specific settings
-    app.config.from_object('app.local_settings')
-    # Load extra settings from extra_config_settings param
-    app.config.update(extra_config_settings)
-
-    # Setup Flask-SQLAlchemy
-    db.init_app(app)
-
-    # Setup Flask-Migrate
-    migrate.init_app(app, db)
-
-    # Setup Flask-Mail
-    mail.init_app(app)
-
-    # Setup WTForms CSRFProtect
-    csrf_protect.init_app(app)
-
-    # Register blueprints
-    from app.resources.main import register_blueprints
-    register_blueprints(app)
-
-    # Define bootstrap_is_hidden_field for flask-bootstrap's bootstrap_wtf.html
-    from wtforms.fields import HiddenField
-
-    def is_hidden_field_filter(field):
-        return isinstance(field, HiddenField)
-
-    app.jinja_env.globals['bootstrap_is_hidden_field'] = is_hidden_field_filter
-
-    # Setup an error-logger to send emails to app.config.ADMINS
-    init_email_error_handler(app)
-
-    # Setup Flask-User to handle user account related forms
-    from .models.user import User
-    from app.resources.main.main import user_profile_page
-
-    # Setup Flask-User
-    user_manager = UserManager(app, db, User)
-
-    @app.context_processor
-    def context_processor():
-        return dict(user_manager=user_manager)
-
-    return app
+#swagger = Swagger(app)
 
 
-def init_email_error_handler(app):
-    """
-    Initialize a logger to send emails on error-level messages.
-    Unhandled exceptions will now send an email message to app.config.ADMINS.
-    """
-    if app.debug: return  # Do not send error emails while developing
+#Register the blueprints from config (ENABLED_VIEWS)
 
-    # Retrieve email settings from app.config
-    host = app.config['MAIL_SERVER']
-    port = app.config['MAIL_PORT']
-    from_addr = app.config['MAIL_DEFAULT_SENDER']
-    username = app.config['MAIL_USERNAME']
-    password = app.config['MAIL_PASSWORD']
-    secure = () if app.config.get('MAIL_USE_TLS') else None
+def register_blueprints(app):
+    from config import ENABLED_RESOURCES
+    for resource in ENABLED_RESOURCES:
+        resourceClass_ = __import__(resource, fromlist=['Resource'])
+        getResource = resourceClass_.Resource()
+        app.register_blueprint(getResource.get_blueprint())
 
-    # Retrieve app settings from app.config
-    to_addr_list = app.config['ADMINS']
-    subject = app.config.get('APP_SYSTEM_ERROR_SUBJECT_LINE', 'System Error')
 
-    # Setup an SMTP mail handler for error-level messages
+register_blueprints(app)
+
+app.jinja_env.globals['authorized'] = authorized
+
+#if debugging is enabled, add the debug toolbar
+if app.debug:
+    toolbar = DebugToolbarExtension(app)
+
+
+#User loader for flask-login
+from app.models.User import User
+@lm.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+
+
+#Log to file if debugging is not enabled
+if not app.debug:
     import logging
-    from logging.handlers import SMTPHandler
+    from logging.handlers import RotatingFileHandler
 
-    mail_handler = SMTPHandler(
-        mailhost=(host, port),  # Mail host and port
-        fromaddr=from_addr,  # From address
-        toaddrs=to_addr_list,  # To address
-        subject=subject,  # Subject line
-        credentials=(username, password),  # Credentials
-        secure=secure,
-    )
-    mail_handler.setLevel(logging.ERROR)
-    app.logger.addHandler(mail_handler)
+    file_handler = RotatingFileHandler('tmp/app.log', 'a', 1 * 1024 * 1024, 10)
+    file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
+    app.logger.setLevel(logging.INFO)
+    file_handler.setLevel(logging.INFO)
+    app.logger.addHandler(file_handler)
+    app.logger.info('???')
 
-    # Log errors using: app.logger.error('Some error message')
-
+if __name__ == '__main__':
+    #app.run()
+    socketio.run(app)

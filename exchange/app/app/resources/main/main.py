@@ -1,53 +1,52 @@
-from flask import Blueprint, redirect, render_template
-from flask import request, url_for
-from flask_user import current_user, login_required, roles_required
+from flask import redirect, render_template, flash, request, url_for, session
+from flask_login import login_user, current_user, login_required, logout_user
+#from app.models.auth import *
+from app.models.User import *
+from flask.views import MethodView
+from app.resources.home.Forms import LoginForm, RegistrationForm
+from flask import jsonify
 
-from app import db
-from app.models.user import UserProfileForm
+class MainView(MethodView):
+	def get(self):
 
-main = Blueprint('main', __name__,
-                        template_folder='templates',
-                        static_folder='static',
-                        static_url_path = '/main/static')
+		if not current_user.is_authenticated:
+			return redirect("/")
 
-# The Home page is accessible to anyone
-@main.route('/')
-def home_page():
-    return render_template('home.html')
-
-
-# The User page is accessible to authenticated users (users that have logged in)
-@main.route('/member')
-@login_required  # Limits access to authenticated users
-def member_page():
-    return render_template('main.html')
+		return render_template('main.html', authenticated=current_user.is_authenticated)
 
 
-# The Admin page is accessible to users with the 'admin' role
-@main.route('/admin')
-@roles_required('admin')  # Limits access to users with the 'admin' role
-def admin_page():
-    return render_template('admin_page.html')
+	def post(self):
+		# log me in
+		if request.method == 'POST' and request.form.get('do') == 'login':
+			form = LoginForm()
+			if form.validate():
+				user=User.query.filter_by(email=form.email.data).first()
+				password = form.password.data
 
+				if user is None:
+				#check user does not exist
+					return jsonify(status = 'error',
+									message = "Ups! username not found!")
 
-@main.route('/profile', methods=['GET', 'POST'])
-@login_required
-def user_profile_page():
-    # Initialize form
-    form = UserProfileForm(request.form, obj=current_user)
+				if user.valid_password(password) == False:
+				#check user password is false
+					return jsonify(status = 'error',
+									message = "Ups! check password")
 
-    # Process valid POST
-    if request.method == 'POST' and form.validate():
-        # Copy form fields to user_profile fields
-        form.populate_obj(current_user)
+				#login and remember user user checks it
+				if login_user(user, remember=form.remember_me.data):
+					session.permanent = not form.remember_me.data
+					session['remember_me'] = form.remember_me.data
+					session['logged_in'] = True
 
-        # Save user_profile
-        db.session.commit()
+				return jsonify(status = 'success',
+								message = url_for("main.main"))
+		#log out 
+		if request.method == 'POST' and request.form.get('do') == 'logout':
+			logout_user()
+			return jsonify(status = 'success',
+							message = url_for("home.home"))
 
-        # Redirect to home page
-        return redirect(url_for('main.home_page'))
+		return jsonify(status = 'validation',
+						message = form.errors)
 
-    # Process GET or invalid POST
-    return render_template('main/user_profile_page.html',
-                           form=form)
-                           

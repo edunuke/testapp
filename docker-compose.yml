@@ -39,8 +39,8 @@ services:
     networks:
       - dbnet
 
-  psqldb:
-    image: postgres
+  postgres:
+    build: postgres
     restart: always
     expose:
       - "5432"

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href={{url_for('main.static', filename='img/faviconLarge.ico')}} type="image/x-icon">
+
+    <title>Dataquantix</title>
+
+    <!-- CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <!-- Custom styles for this template -->
+	<link href={{url_for('home.static', filename='css/home.css')}} rel="stylesheet">
+	<link href={{url_for('home.static', filename='css/loader.css')}} rel="stylesheet">
+  </head>	
+
+  <body class="animated fadeIn">
+      <canvas id="canvas"></canvas>
+      <div id="log_reg">
+          <div id="loader-wrapper">
+              <div class="container" style="">
+                <div class='ring blue'></div>
+                <div id="content">
+                  <span>Cargando</span>
+                </div>
+              </div>      
+            </div>
+          <div class="login-page">
+            <div class="form">
+              <form class="register-form">
+                {{registrationForm.csrf_token()}}
+                <fieldset class="forms_fieldset">
+                {{registrationForm.username(type="text", 
+                                            placeholder="Username",
+                                            autocomplete="on")}}   
+                {{registrationForm.email(type="email",
+                                         placeholder="email",
+                                         autocomplete="on")}}
+                {{registrationForm.password(type="password", 
+                                            placeholder="password",
+                                            autocomplete="off")}}
+                {{registrationForm.submit(class="forms_buttons-action")}}
+
+                <div class="forms_field">
+                  <p>I accept the terms of service</p>
+                  {{registrationForm.accept_tos()}}
+                </div>   
+
+                </fieldset>
+                <p class="message">Already registered? <a href="#">Sign In</a></p>
+              </form>
+  
+  
+              <form class="login-form">
+                <div class="title">
+                  <p> Simple text</p>
+                </div>
+                <fieldset class="forms_fieldset">
+                  {{loginForm.csrf_token()}}
+                  {{loginForm.email(type="email",
+                                    placeholder="Email",
+                                    class="input-block-level",
+                                    autocomplete="on")}}
+                                    
+                  {{loginForm.password(type="password",
+                                       placeholder="Password",
+                                       class="input-block-level",
+                                       autocomplete="off")}}
+
+                  {{loginForm.submit(class="btn-login")}}
+                  <div class="forms_field">
+                      <p>Remember Me</p>
+                      {{loginForm.remember_me()}}
+                      {{loginForm.do(value="login")}}
+                  </div>
+
+              </fieldset>
+                <p class="message">Not registered? <a href="#">Create an account</a></p>
+              </form>
+  
+  
+            </div>
+          </div>
+        </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->    
+    <script src="{{url_for('home.static', filename='node_modules/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{url_for('home.static', filename='node_modules/popper.js/dist/umd/popper.min.js')}}"></script>
+    <script src="{{url_for('home.static', filename='node_modules/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('home.static', filename='js/home.js')}}"></script>
+    <script src="{{url_for('home.static', filename='js/bckg.js')}}"></script>
+  </body>
+</html>
+
+
