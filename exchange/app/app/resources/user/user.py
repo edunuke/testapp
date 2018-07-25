@@ -8,39 +8,28 @@ from flask.views import MethodView
 from app.resources.home.Forms import LoginForm, RegistrationForm
 from flask import jsonify
 
-
 class UserView(MethodView):
-	def get(self):
-		pass
-    
+	def get(self, username):
+		if username is None:
+			return "nothing to see here"
+		else:
+			return username
+	
 	def post(self):
-
 		form = RegistrationForm()
-
 		if form.validate_on_submit():
-
 			if User.query.filter_by(email=form.email.data).first():
 				return jsonify(status = 'validation',
-							message = 'Email already exist')
+							   message = 'Email Exists')
 			else:
-				user = User(username=form.username.data,
-                            password=form.email.data,
-                            email=form.password.data)
-
+				user = User(username= form.username.data,
+							password = form.password.data,
+							email = form.email.data)
 				permission_level = Permission(name=u'read')
 				group_membership = Group(name=u'User')
 				db.session.add([user,
-                                permission_level,
-                                group_membership])
+								permission_level,
+								group_membership])
 				db.session.commit()
-
-		return jsonify(status = 'validation',
-						message = form.errors)
-
-
-
-	def delete(self, username):
-		return 'delete'
-
-	def put(self, username):
-		return 'put'
+			return jsonify(status='validation', 
+						   message = form.errors)

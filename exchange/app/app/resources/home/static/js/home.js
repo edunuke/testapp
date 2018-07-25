@@ -36,7 +36,7 @@ var landingPageController = {
             });     
 
             $.ajax({
-                url: "/main/",
+                url: "/login",
                 data: data,
                 type: 'POST',
                 beforeSend: function () {
@@ -90,24 +90,46 @@ var landingPageController = {
 
         	e.preventDefault();
 
-        	//var data = $(".register-form").serializeArray();
             var data = $('.register-form').serialize()
-
+            console.log(data)
         	$.ajaxSetup({
         		headers:'{{csrf_token}}}'
         	});
 
             $.ajax({
-                url: "/users/",
+                url: "/user",
                 //data: JSON.stringify(data),
                 data: data,
                 type: 'POST',
                 //contentType: "application/json",
                 beforeSend: function () {
-                    console.log(data)
+
                 },
                 success: function(response) {
-                    console.log(response);
+                    timer = 2000;
+                    if (response.status == 'error') {
+                        $("input.oops").removeClass("oops");
+                        Object.keys(response.message).map(e => $(".register-form #register-" + e).addClass("oops"));
+
+
+
+                    } else if (response.status == 'validation') {
+                        $("input.oops").removeClass("oops");
+                        Object.keys(response.message).map(e => $(".register-form #register-" + e).addClass("oops"));
+
+
+                        
+                    } else {
+                        $('canvas').hide()
+                        $('.login-page').hide()
+                        $('#loader-wrapper').fadeIn('slow', function () {
+                            window.location = response.message;
+                        })
+
+
+                        
+                        
+                    }
                 },
                 error: function(error) {
                     console.log(error);
