@@ -49,7 +49,7 @@ var landingPageController = {
                 success: function(response) {
                     timer = 2000;
                     if (response.status == 'error') {
-                        $(".login-form>input.oops").removeClass("oops");
+                        $("input.oops").removeClass("oops");
                         Object.keys(response.message).map(e => $(".login-form #" + e).addClass("oops"));
 
 
