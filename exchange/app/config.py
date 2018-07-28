@@ -4,17 +4,6 @@ from datetime import timedelta
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-
-ENABLED_RESOURCES = [
-    'app.resources.home',
-    'app.resources.main',
-    'app.resources.exchanges',
-    'app.resources.user',
-    'app.resources.login',
-    'app.resources.logout'
-]
-
-
 CSRF_ENABLED = True
 SECRET_KEY = 'CEYB[zd]kSe$=[/V4.l2@~bPmNek1B&}Sr`.95{(kb?o@PH_LP5dQjhuT?g/0OP'
 
@@ -54,7 +43,7 @@ MAIL_PASSWORD = None
 # administrator list
 ADMINS = ['eduardo.denadai@gmail.com']
 
-DEBUG = True
+DEBUG = False
 
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND= 'redis://localhost:6379' 

@@ -16,21 +16,7 @@ manager = Manager(app)
 
 
 #Start up in non-debug mode
-manager.add_command("runserver", Server(
-    use_debugger=False,
-    use_reloader=False,
-    host='0.0.0.0',
-    port=5000,
-    threaded=True))
 
-# Turn on debugger and reloader
-manager.add_command("devserver", Server(
-    use_debugger=True,
-    use_reloader=True,
-    host='0.0.0.0',
-    port=5000,
-    threaded=False,
-    processes=1))
 
 manager.add_command("gunit", GunicornServer())
 
