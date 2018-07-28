@@ -11,6 +11,6 @@ class HomeView(MethodView):
     	if current_user.is_authenticated:
     		return redirect(url_for("main.main"))
 
-    	registrationForm = RegistrationForm(prefix='register')
-    	loginForm = LoginForm()
+    	registrationForm = RegistrationForm(prefix = 'register')
+    	loginForm = LoginForm(prefix = 'login')
     	return render_template('home.html', loginForm = loginForm, registrationForm=registrationForm)

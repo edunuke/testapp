@@ -19,9 +19,9 @@ def InitDB():
     g2 = Group(name=u'Developer')
     g3 = Group(name=u'User')
 
-    u1 = User(username=u'foo_admin', password=u'adminpass',email='admin@example.com')
-    u2 = User(username=u'member1', password=u'test', email='member1@example.com', active=False)
-    u3 = User(username=u'member2', password=u'test',email='member2@example.com', active=False)
+    u1 = User(username=u'foo_admin', password=u'adminpass',email='admin@example.com', confirmed=True)
+    u2 = User(username=u'member1', password=u'test', email='member1@example.com', confirmed=True)
+    u3 = User(username=u'member2', password=u'test',email='member2@example.com', confirmed=True)
 
     g1.permissions = set([p1,p2,p3])
     g2.permissions = set([p1,p2])

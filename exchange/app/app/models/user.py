@@ -14,10 +14,12 @@ class User(UserMixin ,  Base):
     username = db.Column(db.Text, nullable=False, unique=False)
     email = db.Column(db.String(120), nullable=False, unique = True)
     _password = db.Column('password', db.Text, nullable=False)
-    active = db.Column(db.Boolean, nullable=False, default=True)
+    confirmed = db.Column(db.Boolean, nullable=False, default=False)
 
-    groups = db.relationship('Group', secondary=user_group, collection_class=set,
-                                    backref=db.backref('users', collection_class=set, lazy='dynamic'))
+    groups = db.relationship('Group',
+                             secondary=user_group,
+                             collection_class=set,
+                             backref=db.backref('users', collection_class=set, lazy='dynamic'))
 
     def _set_password(self, password):
         self._password = make_hash(password)

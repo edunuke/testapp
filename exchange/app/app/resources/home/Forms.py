@@ -6,7 +6,7 @@ from wtforms.validators import InputRequired, Regexp, Email, DataRequired
 class RegistrationForm(FlaskForm):
 
     username = StringField('Username', 
-    						validators=[Regexp("/^[A-z]+$/", message="Only letters allowed"),
+    						validators=[Regexp('^\w+$', message="Only letters allowed"),
     						InputRequired(message="First name required")])
 
     email = StringField('Email', 

@@ -2,7 +2,7 @@ import sys
 import os
 from app import app
 from flask_script import Manager, Server
-
+from app.packages.gunicornserver import GunicornServer
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..//')))
 
 
@@ -31,6 +31,8 @@ manager.add_command("devserver", Server(
     port=5000,
     threaded=False,
     processes=1))
+
+manager.add_command("gunit", GunicornServer())
 
 
 ##########################################

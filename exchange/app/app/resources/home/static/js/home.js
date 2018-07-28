@@ -1,7 +1,7 @@
 var landingPageController = {
 	/* Set elememnt name tag, class, id, identifiers*/
 	toggleFormElementName : ".message a",
-	loginElementName : "#submit",
+	loginElementName : "#login-submit",
 	registerElementName : "#register-submit",
 
 	findElements: function () {
@@ -48,13 +48,13 @@ var landingPageController = {
                     timer = 2000;
                     if (response.status == 'error') {
                         $("input.oops").removeClass("oops");
-                        Object.keys(response.message).map(e => $(".login-form #" + e).addClass("oops"));
+                        Object.keys(response.message).map(e => $(".login-form #login-" + e).addClass("oops"));
 
 
 
                     } else if (response.status == 'validation') {
                         $("input.oops").removeClass("oops");
-                        Object.keys(response.message).map(e => $(".login-form #" + e).addClass("oops"));
+                        Object.keys(response.message).map(e => $(".login-form #login-" + e).addClass("oops"));
 
                         
     
@@ -64,8 +64,10 @@ var landingPageController = {
                         $('.login-form').remove('span')
                         $('canvas').hide()
                         $('.login-page').hide()
-                        $('#loader-wrapper').fadeIn('slow', function () {
-                            window.location = response.message;
+                        $('#loader-wrapper').fadeIn('fast', function () {
+                            setTimeout(() => {
+                                window.location = response.message;
+                            }, 1500);
                         })
 
 
@@ -108,12 +110,14 @@ var landingPageController = {
                 success: function(response) {
                     timer = 2000;
                     if (response.status == 'error') {
+                        console.log(response)
                         $("input.oops").removeClass("oops");
-                        Object.keys(response.message).map(e => $(".register-form #register-" + e).addClass("oops"));
+                        $(response.message).addClass("oops");
 
 
 
                     } else if (response.status == 'validation') {
+                        console.log(response)
                         $("input.oops").removeClass("oops");
                         Object.keys(response.message).map(e => $(".register-form #register-" + e).addClass("oops"));
 

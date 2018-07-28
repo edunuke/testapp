@@ -2,15 +2,15 @@ from flask import redirect, render_template, flash, request, url_for, session
 from flask_login import login_user, current_user, login_required, logout_user
 from app.models.User import *
 from flask.views import MethodView
-from app.resources.home.Forms import LoginForm, RegistrationForm
+from app.resources.home.Forms import LoginForm
 from flask import jsonify
 
 class LoginView(MethodView):
 
 	def post(self):
 		# log me in
-		if request.method == 'POST' and request.form.get('do') == 'login':
-			form = LoginForm()
+		if request.method == 'POST':
+			form = LoginForm(request.form, prefix='login')
 			if form.validate():
 				user=User.query.filter_by(email=form.email.data).first()
 				password = form.password.data
@@ -33,11 +33,6 @@ class LoginView(MethodView):
 
 				return jsonify(status = 'success',
 								message = url_for("main.main"))
-		#log out 
-		if request.method == 'POST' and request.form.get('do') == 'logout':
-			logout_user()
-			return jsonify(status = 'success',
-							message = url_for("home.home"))
 
-		return jsonify(status = 'validation',
-						message = form.errors)
+			return jsonify(status = 'validation',
+						  message = form.errors)

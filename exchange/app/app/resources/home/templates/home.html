@@ -24,7 +24,7 @@
           <div class="login-page">
             <div class="form">
               <form class="register-form">
-                {{registrationForm.csrf_token()}}
+                {{registrationForm.csrf_token}}
                 <fieldset class="forms_fieldset">
                 {{registrationForm.username(type="text", 
                                             placeholder="Username",
@@ -54,7 +54,7 @@
                   
                 </div>
                 <fieldset class="forms_fieldset">
-                  {{loginForm.csrf_token()}}
+                  {{loginForm.csrf_token}}
                   {{loginForm.email(type="email",
                                     placeholder="Email",
                                     class="input-block-level",

@@ -38,7 +38,7 @@ DEBUG_TB_PANELS = [
     ]
 
 
-SQLALCHEMY_DATABASE_URI ="postgresql://postgres:test@postgres/testdb"
+SQLALCHEMY_DATABASE_URI ="postgresql://postgres:test@postgres/postgres"
 SQLALCHEMY_TRACK_MODIFICATIONS = False    # Avoids a SQLAlchemy Warning
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'database','migrations')
 
