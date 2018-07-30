@@ -11,13 +11,19 @@
     <meta name="keyword" content="Exchange Dashboard">
     <title>Istmex Exchange</title>
     <!-- Icons-->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+   <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/drag-panes.js"></script>
+  <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+
     <link href="{{url_for('main.static', filename='node_modules/@coreui/icons/css/coreui-icons.min.css')}}" rel="stylesheet">
     <link href="{{url_for('main.static', filename='node_modules/flag-icon-css/css/flag-icon.min.css')}}" rel="stylesheet">
     <link href="{{url_for('main.static', filename='node_modules/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{url_for('main.static', filename='node_modules/simple-line-icons/css/simple-line-icons.css')}}" rel="stylesheet">
+    <link href="{{url_for('main.static', filename='vendors/pace-progress/css/pace.min.css')}}" rel="stylesheet">
     <!-- Main styles for this application-->
     <link href="{{url_for('main.static', filename='css/style.css')}}" rel="stylesheet">
-    <link href="{{url_for('main.static', filename='vendors/pace-progress/css/pace.min.css')}}" rel="stylesheet">
+
 
 
   </head>
@@ -426,33 +432,9 @@
             <!-- /.row-->
             <div class="card">
               <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-5">
-                    <h4 class="card-title mb-0">Traffic</h4>
-                    <div class="small text-muted">November 2017</div>
-                  </div>
-                  <!-- /.col-->
-                  <div class="col-sm-7 d-none d-md-block">
-                    <button class="btn btn-primary float-right" type="button">
-                      <i class="icon-cloud-download"></i>
-                    </button>
-                    <div class="btn-group btn-group-toggle float-right mr-3" data-toggle="buttons">
-                      <label class="btn btn-outline-secondary">
-                        <input id="option1" type="radio" name="options" autocomplete="off"> Day
-                      </label>
-                      <label class="btn btn-outline-secondary active">
-                        <input id="option2" type="radio" name="options" autocomplete="off" checked=""> Month
-                      </label>
-                      <label class="btn btn-outline-secondary">
-                        <input id="option3" type="radio" name="options" autocomplete="off"> Year
-                      </label>
-                    </div>
-                  </div>
-                  <!-- /.col-->
-                </div>
-                <!-- /.row-->
-                <div class="chart-wrapper" style="height:300px;margin-top:40px;">
-                  <canvas class="chart" id="main-chart" height="300"></canvas>
+
+                <div class="chart-wrapper" style="height:500px;margin-top:5px;">
+                  <div id="main-chart" style="height: 100%; width: 100%; position:relative"></div>
                 </div>
               </div>
               <div class="card-footer">
@@ -1355,15 +1337,16 @@
       </div>
     </footer>
     <!-- CoreUI and necessary plugins-->
-    <script src="{{url_for('main.static', filename='node_modules/jquery/dist/jquery.min.js')}}"></script>
+
     <script src="{{url_for('main.static', filename='node_modules/popper.js/dist/umd/popper.min.js')}}"></script>
     <script src="{{url_for('main.static', filename='node_modules/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <script src="{{url_for('main.static', filename='node_modules/pace-progress/pace.min.js')}}"></script>
     <script src="{{url_for('main.static', filename='node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js')}}"></script>
     <script src="{{url_for('main.static', filename='node_modules/@coreui/coreui/dist/js/coreui.min.js')}}"></script>
-    <!-- Plugins and scripts required by this view-->
     <script src="{{url_for('main.static', filename='node_modules/chart.js/dist/Chart.min.js')}}"></script>
     <script src="{{url_for('main.static', filename='node_modules/@coreui/coreui-plugin-chartjs-custom-tooltips/dist/js/custom-tooltips.min.js')}}"></script>
+    <!-- Plugins and scripts required by this view-->
+
     <script src="{{url_for('main.static', filename='js/main.js')}}"></script>
     <script src="{{url_for('main.static', filename='js/main_olhc.js')}}"></script>
   </body>

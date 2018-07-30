@@ -126,14 +126,12 @@ var landingPageController = {
                     } else {
                         $('canvas').hide()
                         $('.login-page').hide()
-                        $('#loader-wrapper').fadeIn('slow', function () {
-                            window.location = response.message;
-                        })
-
-
-                        
-                        
+                        $('#loader-wrapper').fadeIn('fast')
                     }
+                },
+                complete:function(response) {
+                    window.location = response.message;
+
                 },
                 error: function(error) {
                     console.log(error);
